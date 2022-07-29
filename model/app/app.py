@@ -1,8 +1,8 @@
+from cProfile import label
 from PIL import Image
 from torchvision import transforms
 import torch
 from pytorch_pretrained_vit import ViT
-import torch.optim as optim
 import argparse
 
 parser = argparse.ArgumentParser()
@@ -28,8 +28,6 @@ model = ViT('B_32_imagenet1k',
     image_size=224,
     num_classes=NUM_CLASSES
 )
-
-optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
 
 # load checkpoints
 checkpoint = torch.load(PATH, map_location=device)
@@ -58,12 +56,9 @@ def predict(image):
 
     prob = torch.nn.functional.softmax(out, dim = 1)[0] * 100
     _, indices = torch.sort(out, descending = True)
-    return [(classes[idx], prob[idx].item()) for idx in indices[0][:5]]
+    return [{(classes[idx].split())[1], prob[idx].item()} for idx in indices[0][:5]]
 
 image = Image.open(IMAGE_PATH).convert('RGB')
 labels = predict(image)
 
-# predicted class
-for i in labels:
-    name = i[0].split()
-    print("Prediction ", name[1], ", Score: ", i[1])
+print(labels)
