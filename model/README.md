@@ -1,9 +1,17 @@
 ## wtf Model
 
 ### Project Structure
+```
+.
+├── app.py
+├── class_food.txt
+├── model_food.pth
+├── output.json
+├── README.md
+└── test.jpeg
 
-
-### Description
+0 directories, 6 files
+```
 
 ### Running
 ```bash
