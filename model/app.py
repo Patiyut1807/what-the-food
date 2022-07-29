@@ -4,6 +4,7 @@ from torchvision import transforms
 import torch
 from pytorch_pretrained_vit import ViT
 import argparse
+import json
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--model', type=int, default=0, help="What kind of model you want to classified 0:food, 1:animal")
@@ -56,9 +57,16 @@ def predict(image):
 
     prob = torch.nn.functional.softmax(out, dim = 1)[0] * 100
     _, indices = torch.sort(out, descending = True)
-    return [{(classes[idx].split())[1], prob[idx].item()} for idx in indices[0][:5]]
+
+    labels = []
+    for idx in indices[0][:5]:
+        labels.append([{'class':(classes[idx].split())[1],'probability':prob[idx].item()}])
+
+    return labels
 
 image = Image.open(IMAGE_PATH).convert('RGB')
 labels = predict(image)
 
-print(labels)
+output = json.dumps(labels)
+with open("output.json", "w") as outfile:
+    outfile.write(output)
