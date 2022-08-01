@@ -15,4 +15,3 @@ This application is ...
 just download and btooooom!!!
 ```
 
-## Contributing
