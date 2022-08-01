@@ -7,7 +7,7 @@
 
 ## Description
 
-This apllication is ...
+This application is ...
 
 ## Usage
 
