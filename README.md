@@ -12,7 +12,7 @@ This application is ...
 ## Usage
 
 ```
-Hello
+just download and btooooom!!!
 ```
 
 ## Contributing
