@@ -1,4 +1,8 @@
 <resources>
-    <string name="app_name">CameraXApp</string>
+    <string name="app_name">WTF</string>
     <string name="take_photo">Take Photo</string>
+    <string name="pick_image">Pick Image</string>
+    <string name="todo">TODO</string>
+    <string name="image">image/*</string>
+
 </resources>
