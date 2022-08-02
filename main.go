@@ -1,55 +1,92 @@
 package main
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
-	"io"
+	"io/ioutil"
 	"log"
-	"net/http"
-	"net/url"
 	"os"
+	"os/exec"
 
 	"github.com/gofiber/fiber/v2"
 )
 
+type Outputjson struct {
+	Class       string  `json:"class"`
+	Probability float64 `json"probability"`
+}
+
+func ComplierPython() {
+
+	cmd := exec.Command("python", "app.py", "--model", "0", "--img", "./components/input.jpg")
+	var out bytes.Buffer
+	var stderr bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &stderr
+	err := cmd.Run()
+
+	if err != nil {
+		log.Fatal(fmt.Sprint(err) + ": " + stderr.String())
+	}
+
+	fmt.Printf("Complied")
+}
+
 func main() {
+
 	app := fiber.New()
 
-	app.Post("/post-image", func(c *fiber.Ctx) error {
+	app.Post("/postimage", func(c *fiber.Ctx) error {
+
 		image, err := c.FormFile("image")
+
 		if err == nil {
-			c.SaveFile(image, fmt.Sprintf("./components/%s", image.Filename))
+			c.SaveFile(image, "./components/input.jpg")
 		} else {
 			return c.SendString("Error")
 		}
-		return c.SendString("Image has uploaded.")
+
+		return c.SendString("Image is uploaded")
 	})
 
-	app.Post("/post-image-url", func(c *fiber.Ctx) error {
-
-		imageURL, err := url.Parse(c.FormValue("url"))
-		if err != nil {
-			panic(err)
-		}
-
-		res, err := http.Get(imageURL.String())
-		if err != nil {
-			log.Fatal(err)
-		}
-		defer res.Body.Close()
-
-		file, err := os.Create(fmt.Sprintf("./components/%s.jpg", imageURL.Hostname()))
-		if err != nil {
-			log.Fatal(err)
-		}
-		defer file.Close()
-
-		_, err = io.Copy(file, res.Body)
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		return c.SendString("Image has uploaded.")
+	app.Patch("/complie", func(c *fiber.Ctx) error {
+		ComplierPython()
+		return c.SendString("Finished")
 	})
 
-	log.Fatal(app.Listen(":8080"))
+	app.Get("/result", func(c *fiber.Ctx) error {
+
+		file, e := ioutil.ReadFile("output.json")
+		if e != nil {
+			log.Fatal(e)
+		}
+
+		var output []Outputjson
+
+		err := json.Unmarshal(file, &output)
+
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		return c.JSON(output)
+	})
+
+	app.Delete("/reset", func(c *fiber.Ctx) error {
+
+		err := os.Remove("./components/input.jpg")
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		e := os.Remove("output.json")
+		if err != nil {
+			log.Fatal(e)
+		}
+
+		return c.SendString("Deleted")
+	})
+
+	log.Fatal(app.Listen(":8000"))
 }
