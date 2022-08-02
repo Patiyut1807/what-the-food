@@ -23,7 +23,7 @@
         android:layout_width="415dp"
         android:layout_height="128dp"
         android:animateLayoutChanges="false"
-        android:background="#347A7A7A"
+        android:background="#257A7A7A"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
