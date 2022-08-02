@@ -6,7 +6,7 @@ import argparse
 import json
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--model', type=int, default=0, help="What kind of model you want to classified 0:food, 1:animal")
+parser.add_argument('--model', type=int, default=0, help="What kind of model you want to classified 0:food")
 parser.add_argument('--img', type=str, help="Image file name to predict")
 args = vars(parser.parse_args())
 
