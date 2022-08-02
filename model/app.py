@@ -1,4 +1,3 @@
-from cProfile import label
 from PIL import Image
 from torchvision import transforms
 import torch
