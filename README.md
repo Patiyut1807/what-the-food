@@ -10,17 +10,30 @@
 ├── README.md
 ├── backend
 │   ├── Dockerfile
+│   ├── README.md
 │   ├── go.mod
 │   ├── go.sum
 │   └── main.go
-└── model
-    ├── README.md
-    ├── app.py
-    ├── class_food.txt
-    ├── output.json
-    └── test.jpeg
+├── model
+│   ├── README.md
+│   ├── app.py
+│   ├── class_food.txt
+│   ├── output.json
+│   └── test.jpeg
+└── wtf_app
+    ├── app
+    │   ├── build.gradle
+    │   ├── proguard-rules.pro
+    │   ├── release
+    │   │   ├── app-release.apk
+    │   │   └── output-metadata.json
+    │   └── src
+    │       └── main
+    .
+    .
+    └── settings.gradle
 
-2 directories, 11 files
+36 directories, 48 files
 ```
 
 `model` : PyTorch inference script
