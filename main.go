@@ -39,53 +39,40 @@ func main() {
 
 	app.Post("/postimage", func(c *fiber.Ctx) error {
 
-		image, err := c.FormFile("image")
+		image, saveImageErr := c.FormFile("image")
 
-		if err == nil {
+		if saveImageErr == nil {
 			c.SaveFile(image, "./components/input.jpg")
 		} else {
 			return c.SendString("Error")
 		}
 
-		return c.SendString("Image is uploaded")
-	})
-
-	app.Patch("/complie", func(c *fiber.Ctx) error {
 		ComplierPython()
-		return c.SendString("Finished")
-	})
 
-	app.Get("/result", func(c *fiber.Ctx) error {
-
-		file, e := ioutil.ReadFile("output.json")
-		if e != nil {
-			log.Fatal(e)
+		file, readJsonErr := ioutil.ReadFile("output.json")
+		if readJsonErr != nil {
+			log.Fatal(readJsonErr)
 		}
 
 		var output []Outputjson
 
-		err := json.Unmarshal(file, &output)
+		jsonErr := json.Unmarshal(file, &output)
 
-		if err != nil {
-			fmt.Println(err)
+		if jsonErr != nil {
+			fmt.Println(jsonErr)
+		}
+
+		removeInputErr := os.Remove("./components/input.jpg")
+		if removeInputErr != nil {
+			log.Fatal(removeInputErr)
+		}
+
+		removeOutputErr := os.Remove("output.json")
+		if removeOutputErr != nil {
+			log.Fatal(removeOutputErr)
 		}
 
 		return c.JSON(output)
-	})
-
-	app.Delete("/reset", func(c *fiber.Ctx) error {
-
-		err := os.Remove("./components/input.jpg")
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		e := os.Remove("output.json")
-		if err != nil {
-			log.Fatal(e)
-		}
-
-		return c.SendString("Deleted")
 	})
 
 	log.Fatal(app.Listen(":8000"))
