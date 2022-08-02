@@ -37,3 +37,6 @@
 ### Contributing
 
 We wish to expand this project up and correct all of our faults in order to make our project great.
+
+### License
+[MIT](https://choosealicense.com/licenses/mit/)
