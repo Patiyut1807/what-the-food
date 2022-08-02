@@ -37,6 +37,10 @@ func main() {
 
 	app := fiber.New()
 
+	app.Get("/test", func(c *fiber.Ctx) error {
+		return c.SendString("Hello")
+	})
+
 	app.Post("/postimage", func(c *fiber.Ctx) error {
 
 		image, saveImageErr := c.FormFile("image")
