@@ -40,7 +40,7 @@
 
 `backend` : go backend
 
-`android-app` : android application
+`wtf_app` : android application
 
 > For more details, you can read through each README for each directory.
 
