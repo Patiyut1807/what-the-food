@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,21 +9,40 @@
     <androidx.camera.view.PreviewView
         android:id="@+id/viewFinder"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layerType="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/image_capture_button"
-        android:layout_height="110dp"
-        android:layout_marginBottom="50dp"
-        android:elevation="2dp"
-        android:text="@string/take_photo"
+    </androidx.camera.view.PreviewView>
+
+    <FrameLayout
+        android:id="@+id/frameLayout2"
+        android:layout_width="415dp"
+        android:layout_height="128dp"
+        android:animateLayoutChanges="false"
+        android:background="#347A7A7A"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/viewFinder"
-        android:layout_width="wrap_content"/>
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/image_capture_button"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:drawablePadding="3dp"
+            android:elevation="2dp"
+            android:gravity="center|center_horizontal"
+            android:text="@string/take_photo"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:visibility="visible"
+            app:cornerRadius="40dp" />
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
