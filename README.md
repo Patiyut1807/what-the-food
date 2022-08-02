@@ -24,7 +24,9 @@
 ```
 
 `model` : PyTorch inference script
+
 `backend` : go backend
+
 `android-app` : android application
 
 > For more details, you can read through each README for each directory.
