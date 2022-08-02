@@ -59,7 +59,7 @@ def predict(image):
 
     labels = []
     for idx in indices[0][:5]:
-        labels.append([{'class':(classes[idx].split())[1],'probability':prob[idx].item()}])
+        labels.append({'class':(classes[idx].split())[1],'probability':prob[idx].item()})
 
     return labels
 
