@@ -13,7 +13,7 @@
 0 directories, 6 files
 ```
 
-> For `model_food.pth` we use CMKL's model checkpoints, please follow this link and download it from google drive [model_food.pth](https://drive.google.com/drive/folders/113kF1b1pMHqLYTcLYiL1uxTc2VVzi0N1?usp=sharing).
+> For `model_food.pth` we use [CMKL's](https://github.com/CMKL-University) model checkpoints, please follow this link and download it from google drive [model_food.pth](https://drive.google.com/drive/folders/113kF1b1pMHqLYTcLYiL1uxTc2VVzi0N1?usp=sharing).
 
 ### Running
 ```bash
