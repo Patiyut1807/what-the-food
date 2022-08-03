@@ -1,12 +1,23 @@
 FROM golang:1.18
 
-WORKDIR /usr/src/app
+RUN go install github.com/beego/bee/v2@latest
 
-# pre-copy/cache go.mod for pre-downloading dependencies and only redownloading them in subsequent builds if they change
-COPY go.mod go.sum ./
-RUN go mod download && go mod verify
+ENV GO111MODULE=on
+ENV GOFLAGS=-mod=vendor
 
-COPY . .
-RUN go build -v -o /usr/local/bin/app ./...
+ENV APP_HOME /what-the-food
+RUN mkdir -p "$APP_HOME"
 
-CMD ["app"]
+WORKDIR "$APP_HOME"
+
+COPY src/app.py ./app.py
+COPY src/class_food.txt ./class_food.txt
+COPY src/model_food.pth ./model_food.pth
+COPY src/requirements.txt ./requirements.txt
+
+RUN apt-get update
+RUN apt-get -y install python3-pip
+RUN pip3 install -r requirements.txt
+
+EXPOSE 8000
+CMD ["bee", "run"]

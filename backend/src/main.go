@@ -19,7 +19,7 @@ type Outputjson struct {
 
 func ComplierPython() {
 
-	cmd := exec.Command("python", "app.py", "--model", "0", "--img", "./components/input.jpg")
+	cmd := exec.Command("python", "../model/app.py", "--model", "0", "--img", "input.jpg")
 	var out bytes.Buffer
 	var stderr bytes.Buffer
 	cmd.Stdout = &out
@@ -46,7 +46,7 @@ func main() {
 		image, saveImageErr := c.FormFile("image")
 
 		if saveImageErr == nil {
-			c.SaveFile(image, "./components/input.jpg")
+			c.SaveFile(image, "input.jpg")
 		} else {
 			return c.SendString("Error")
 		}
@@ -66,7 +66,7 @@ func main() {
 			fmt.Println(jsonErr)
 		}
 
-		removeInputErr := os.Remove("./components/input.jpg")
+		removeInputErr := os.Remove("input.jpg")
 		if removeInputErr != nil {
 			log.Fatal(removeInputErr)
 		}
