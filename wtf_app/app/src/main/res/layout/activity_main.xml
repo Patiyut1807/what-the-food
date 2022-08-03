@@ -12,6 +12,7 @@
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_marginTop="16dp"
+        android:contentDescription="@string/todo"
         app:layout_constraintBottom_toTopOf="@+id/btnPick"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -19,8 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.163"
         app:srcCompat="@mipmap/ic_launcher"
-        tools:ignore="ImageContrastCheck"
-        android:contentDescription="@string/todo" />
+        tools:ignore="ImageContrastCheck" />
 
     <Button
         android:id="@+id/btnCamera"
@@ -41,4 +41,14 @@
         app:layout_constraintBottom_toTopOf="@+id/btnCamera"
         app:layout_constraintEnd_toEndOf="@+id/btnCamera"
         app:layout_constraintStart_toStartOf="@+id/btnCamera" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="@+id/btnPick"
+        app:layout_constraintStart_toStartOf="@+id/btnPick"
+        app:layout_constraintTop_toBottomOf="@+id/imgPreview" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

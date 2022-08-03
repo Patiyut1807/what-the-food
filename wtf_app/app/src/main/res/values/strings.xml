@@ -4,5 +4,6 @@
     <string name="pick_image">Pick Image</string>
     <string name="todo">TODO</string>
     <string name="image">image/*</string>
+    <string name="textview">TextView</string>
 
 </resources>
