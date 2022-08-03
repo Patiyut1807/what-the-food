@@ -1,12 +1,13 @@
 FROM golang:1.18
 
-WORKDIR /usr/src/app
+RUN go install github.com/beego/bee/v2@latest
 
-# pre-copy/cache go.mod for pre-downloading dependencies and only redownloading them in subsequent builds if they change
-COPY go.mod go.sum ./
-RUN go mod download && go mod verify
+ENV GO111MODULE=on
+ENV GOFLAGS=-mod=vendor
 
-COPY . .
-RUN go build -v -o /usr/local/bin/app ./...
+ENV APP_PATH /go/src/what-the-food-backend
+RUN mkdir -p "$APP_PATH"
 
-CMD ["app"]
+WORKDIR "$APP_PATH"
+EXPOSE 8000
+CMD ["bee", "run"]
