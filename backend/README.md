@@ -12,19 +12,19 @@ In `src` floder
 
 Use this command to init go mod
 
-```bash
+```go
 go mod init example.com/path
 ```
 
 Install Fiber V2
 
-```bash
+```go
 go get -u github.com/gofiber/fiber/v2
 ```
 
 Download the required dependencies
 
-```bash
+```go
 go mod download
 go mod vendor
 go mod vertify
@@ -34,7 +34,7 @@ go mod vertify
 
 _Run the app using go run command_
 
-```bash
+```go
 go run main.go
 ```
 
@@ -50,6 +50,6 @@ docker run -it -d --rm -p 8000:8000 -v $PWD/src:/go/src/what-the-food-backend wh
 
 _Go to `http://server_pi:8000/test` and see the result_
 
-```bash
+```text
 Hello
 ```
