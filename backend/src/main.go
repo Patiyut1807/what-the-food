@@ -14,7 +14,7 @@ import (
 
 type Outputjson struct {
 	Class       string  `json:"class"`
-	Probability float64 `json"probability"`
+	Probability float64 `json:"probability"`
 }
 
 func ComplierPython() {
