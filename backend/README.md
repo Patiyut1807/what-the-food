@@ -26,7 +26,6 @@ Download the required dependencies
 
 ```go
 go mod download
-go mod vendor
 go mod vertify
 ```
 
@@ -45,7 +44,7 @@ docker build -t what-the-food-backend .
 ```
 
 ```bash
-docker run -it -d --rm -p 8000:8000 -v $PWD/src:/go/src/what-the-food-backend what-the-food-backend
+docker run -it -d  --rm -p 8000:8000 -v $PWD/src:/what-the-food what-the-food-backend
 ```
 
 _Go to `http://server_pi:8000/test` and see the result_

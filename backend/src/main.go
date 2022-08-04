@@ -14,12 +14,12 @@ import (
 
 type Outputjson struct {
 	Class       string  `json:"class"`
-	Probability float64 `json"probability"`
+	Probability float64 `json:"probability"`
 }
 
 func ComplierPython() {
 
-	cmd := exec.Command("python", "../model/app.py", "--model", "0", "--img", "input.jpg")
+	cmd := exec.Command("python", "app.py", "--model", "0", "--img", "input.jpg")
 	var out bytes.Buffer
 	var stderr bytes.Buffer
 	cmd.Stdout = &out
@@ -76,7 +76,7 @@ func main() {
 			log.Fatal(removeOutputErr)
 		}
 
-		return c.JSON(output)
+		return c.JSON(output[0])
 	})
 
 	log.Fatal(app.Listen(":8000"))
