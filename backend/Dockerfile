@@ -1,23 +1,22 @@
 FROM golang:1.18
 
-RUN go install github.com/beego/bee/v2@latest
-
-ENV GO111MODULE=on
-ENV GOFLAGS=-mod=vendor
-
-ENV APP_HOME /what-the-food
-RUN mkdir -p "$APP_HOME"
-
-WORKDIR "$APP_HOME"
-
-COPY src/app.py ./app.py
-COPY src/class_food.txt ./class_food.txt
-COPY src/model_food.pth ./model_food.pth
-COPY src/requirements.txt ./requirements.txt
-
 RUN apt-get update
 RUN apt-get -y install python3-pip
+
+RUN mkdir /wtf
+
+WORKDIR /wtf
+
+COPY model/app.py .
+COPY model/class_food.txt .
+COPY model/model_food.pth .
+COPY model/requirements.txt .
+
+COPY src/main.go .
+COPY src/go.sum .
+COPY src/go.mod .
+
 RUN pip3 install -r requirements.txt
 
 EXPOSE 8000
-CMD ["bee", "run"]
+CMD ["go","run","main.go"]
