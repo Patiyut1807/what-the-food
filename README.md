@@ -6,39 +6,36 @@
 
 ```
 .
-├── LICENSE
-├── README.md
 ├── backend
 │   ├── Dockerfile
+│   ├── model
+│   │   ├── app.py
+│   │   ├── class_food.txt
+│   │   └── README.md
 │   ├── README.md
-│   ├── go.mod
-│   ├── go.sum
-│   └── main.go
-├── model
-│   ├── README.md
-│   ├── app.py
-│   ├── class_food.txt
-│   ├── output.json
-│   └── test.jpeg
+│   └── src
+│       ├── go.mod
+│       ├── go.sum
+│       └── main.go
+├── LICENSE
+├── README.md
 └── wtf_app
     ├── app
     │   ├── build.gradle
     │   ├── proguard-rules.pro
     │   ├── release
-    │   │   ├── app-release.apk
-    │   │   └── output-metadata.json
     │   └── src
-    │       └── main
-    .
-    .
+    ├── build.gradle
+    ├── gradle
+    ├── gradle.properties
+    ├── gradlew
+    ├── gradlew.bat
     └── settings.gradle
 
-36 directories, 48 files
+37 directories, 46 files
 ```
 
-`model` : PyTorch inference script
-
-`backend` : go backend
+`backend` : go backend and classification model
 
 `wtf_app` : android application
 
