@@ -12,19 +12,19 @@ In `src` floder
 
 Use this command to init go mod
 
-```go
+```bash
 go mod init example.com/path
 ```
 
 Install Fiber V2
 
-```go
+```bash
 go get -u github.com/gofiber/fiber/v2
 ```
 
 Download the required dependencies
 
-```go
+```bash
 go mod download
 go mod vertify
 ```
@@ -33,7 +33,7 @@ go mod vertify
 
 _Run the app using go run command_
 
-```go
+```bash
 go run main.go
 ```
 
