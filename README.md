@@ -43,6 +43,12 @@
 
 ### To run `what-the-food` application
 
+## WTF-What the food android application
+### Roadmap
+- Feature
+> Capture image
+> Present how to cook that food
+> Input name of the food to present data of that food
 
 ### Contributing
 
