@@ -23,6 +23,7 @@
 
 ### Usage
 `Backend` : [deploy the backend](./backend/README.md)
+
 `WTF app` : [download the release](https://github.com/paleumm/what-the-food/releases)
 
 
