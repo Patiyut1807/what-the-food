@@ -8,11 +8,9 @@ This is the `back-end` part, which is written in `Go-lang`.
 
 ## Installation
 
-In `src` floder
-
 Use this command to init go mod
 
-```go
+```bash
 go mod init example.com/path
 ```
 
@@ -24,7 +22,7 @@ go get -u github.com/gin-gonic/gin
 
 Download the required dependencies
 
-```go
+```bash
 go mod download
 go mod vertify
 ```
@@ -33,7 +31,7 @@ go mod vertify
 
 _Run the app using go run command_
 
-```go
+```bash
 go run main.go
 ```
 
