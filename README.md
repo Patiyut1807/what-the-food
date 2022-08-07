@@ -1,8 +1,5 @@
 [![what-the-food](https://img.shields.io/badge/what--the--food-b171cc?style=for-the-badge)](https://github.com/paleumm/what-the-food) 
 
-[![stars - what-the-food](https://img.shields.io/github/stars/paleumm/what-the-food?style=for-the-badge)](https://github.com/paleumm/what-the-food) [![forks - what-the-food](https://img.shields.io/github/forks/paleumm/what-the-food?style=for-the-badge)](https://github.com/paleumm/what-the-food) 
-
-
 **what-the-food** or **WTF** is a mobile application that allows users to classify Thai food from their mobile devices.
 
 ### Project Structure
