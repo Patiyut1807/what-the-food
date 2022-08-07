@@ -26,7 +26,7 @@
 
 `WTF app` : [download the release](https://github.com/paleumm/what-the-food/releases)
 
-
+<!--
 
 </div>
 
@@ -36,7 +36,7 @@
 
 [![view - Documentation](https://img.shields.io/badge/view-Documentation-blue?style=for-the-badge)](/docs/ "Go to project documentation")
 
-</div>
+</div> -->
 
 <!-- ### Tech Stack
 
