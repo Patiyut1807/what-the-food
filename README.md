@@ -7,32 +7,9 @@
 ```
 .
 ├── backend
-│   ├── Dockerfile
 │   ├── model
-│   │   ├── app.py
-│   │   ├── class_food.txt
-│   │   └── README.md
-│   ├── README.md
 │   └── src
-│       ├── go.mod
-│       ├── go.sum
-│       └── main.go
-├── LICENSE
-├── README.md
 └── wtf_app
-    ├── app
-    │   ├── build.gradle
-    │   ├── proguard-rules.pro
-    │   ├── release
-    │   └── src
-    ├── build.gradle
-    ├── gradle
-    ├── gradle.properties
-    ├── gradlew
-    ├── gradlew.bat
-    └── settings.gradle
-
-37 directories, 46 files
 ```
 
 `backend` : go backend and classification model
@@ -41,8 +18,9 @@
 
 > For more details, you can read through each README for each directory.
 
-### To run `what-the-food` application
-
+### Usage
+`Backend` : [deploy the backend](./backend/README.md)
+`WTF app` : [download the release](https://github.com/paleumm/what-the-food/releases)
 
 ### Contributing
 
