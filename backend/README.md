@@ -8,8 +8,6 @@ This is the `back-end` part, which is written in `Go-lang`.
 
 ## Installation
 
-In `src` floder
-
 Use this command to init go mod
 
 ```bash
