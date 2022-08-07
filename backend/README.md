@@ -16,7 +16,7 @@ Use this command to init go mod
 go mod init example.com/path
 ```
 
-Install Fiber V2
+Install Gin-Gonic
 
 ```go
 go get -u github.com/gin-gonic/gin
