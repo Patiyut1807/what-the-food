@@ -18,5 +18,5 @@ COPY src/go.mod .
 
 RUN pip3 install -r requirements.txt
 
-EXPOSE 8000
+EXPOSE 5000
 CMD ["go","run","main.go"]

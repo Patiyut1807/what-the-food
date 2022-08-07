@@ -1,42 +1,45 @@
 package main
 
 import (
-	"bytes"
 	"encoding/json"
-	"fmt"
 	"io"
 	"io/ioutil"
-	"log"
 	"net/http"
-	"net/url"
 	"os"
 	"os/exec"
 
-	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gin-gonic/gin"
 )
+
+type Data struct {
+	Text string `json:"text"`
+}
 
 type Outputjson struct {
 	Class       string  `json:"class"`
 	Probability float64 `json:"probability"`
 }
 
-func Complier() Outputjson {
+func Complier(c *gin.Context) {
 
-	cmd := exec.Command("python", "app.py", "--model", "0", "--img", "input.jpg")
-	var out bytes.Buffer
-	var stderr bytes.Buffer
-	cmd.Stdout = &out
-	cmd.Stderr = &stderr
+	cmd := exec.Command("python3", "app.py", "--model", "0", "--img", "input.jpg")
 	err := cmd.Run()
 
 	if err != nil {
-		log.Fatal(fmt.Sprint(err) + ": " + stderr.String())
+		data := Data{
+			Text: err.Error(),
+		}
+		c.JSON(0, data)
+		return
 	}
 
 	file, readJsonErr := ioutil.ReadFile("output.json")
 	if readJsonErr != nil {
-		log.Fatal(readJsonErr)
+		data := Data{
+			Text: readJsonErr.Error(),
+		}
+		c.JSON(0, data)
+		return
 	}
 
 	var output []Outputjson
@@ -44,87 +47,79 @@ func Complier() Outputjson {
 	jsonErr := json.Unmarshal(file, &output)
 
 	if jsonErr != nil {
-		fmt.Println(jsonErr)
+		data := Data{
+			Text: jsonErr.Error(),
+		}
+		c.JSON(0, data)
+		return
 	}
 
-	removeInputErr := os.Remove("input.jpg")
-	if removeInputErr != nil {
-		log.Fatal(removeInputErr)
-	}
+	c.JSON(http.StatusOK, output[0])
 
-	removeOutputErr := os.Remove("output.json")
-	if removeOutputErr != nil {
-		log.Fatal(removeOutputErr)
-	}
+}
 
-	return output[0]
+func servercheck(c *gin.Context) {
+
+	data := Data{
+		Text: "Golang",
+	}
+	c.JSON(http.StatusOK, data)
+}
+
+func uploadimage(c *gin.Context) {
+	c.Header("Content-Type", "image/jpeg")
+	file, err := c.FormFile("image")
+	if err == nil {
+		c.SaveUploadedFile(file, "input.jpg")
+		Complier(c)
+	} else {
+		data := Data{
+			Text: err.Error(),
+		}
+		c.JSON(0, data)
+		return
+	}
+}
+
+func uploadurl(c *gin.Context) {
+	imgurl := c.PostForm("url")
+	res, err := http.Get(imgurl)
+	if err != nil {
+		data := Data{
+			Text: err.Error(),
+		}
+		c.JSON(0, data)
+		return
+	}
+	defer res.Body.Close()
+
+	file, err := os.Create("input.jpg")
+	if err != nil {
+		data := Data{
+			Text: err.Error(),
+		}
+		c.JSON(0, data)
+		return
+	}
+	defer file.Close()
+
+	_, err = io.Copy(file, res.Body)
+	if err != nil {
+		data := Data{
+			Text: err.Error(),
+		}
+		c.JSON(0, data)
+		return
+	}
+	Complier(c)
 }
 
 func main() {
+	app := gin.Default()
 
-	app := fiber.New()
-	app.Use(cors.New(cors.Config{
-		Next:             nil,
-		AllowOrigins:     "*",
-		AllowMethods:     "GET,POST,HEAD,PUT,DELETE,PATCH",
-		AllowHeaders:     "",
-		AllowCredentials: false,
-		ExposeHeaders:    "",
-		MaxAge:           0,
-	}))
+	app.GET("/test", servercheck)
+	app.POST("post-image", uploadimage)
+	app.POST("/post-url", uploadurl)
 
-	app.Get("/test", func(c *fiber.Ctx) error {
-
-		type Data struct {
-			Name string
-		}
-
-		data := Data{
-			Name: "Test",
-		}
-
-		return c.JSON(data)
-	})
-
-	app.Post("/post-image", func(c *fiber.Ctx) error {
-
-		image, saveImageErr := c.FormFile("image")
-
-		if saveImageErr == nil {
-			c.SaveFile(image, "input.jpg")
-		} else {
-			return c.SendString("Error")
-		}
-
-		return c.JSON(Complier())
-	})
-
-	app.Post("post-url-image", func(c *fiber.Ctx) error {
-
-		imageURL, err := url.Parse(c.FormValue("url"))
-		if err != nil {
-			panic(err)
-		}
-
-		res, err := http.Get(imageURL.String())
-		if err != nil {
-			log.Fatal(err)
-		}
-		defer res.Body.Close()
-
-		file, err := os.Create("input.jpg")
-		if err != nil {
-			log.Fatal(err)
-		}
-		defer file.Close()
-
-		_, err = io.Copy(file, res.Body)
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		return c.JSON(Complier())
-	})
-
-	log.Fatal(app.Listen(":4000"))
+	app.Run(":5000")
 }
