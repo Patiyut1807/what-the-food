@@ -3,7 +3,7 @@
 ![Kotlin](https://img.shields.io/badge/kotlin-%230095D5.svg?style=for-the-badge&logo=kotlin&logoColor=white) ![Go](https://img.shields.io/badge/go-%2300ADD8.svg?style=for-the-badge&logo=go&logoColor=white) ![PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=PyTorch&logoColor=white) ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white) 
 
 
-**what-the-food** or **WTF** is a mobile application that allows users to classify Thai food from their mobile devices.
+**WTF** or **what-the-food** is a mobile application that allows users to classify Thai food from their mobile devices.
 
 ### Project Structure
 
