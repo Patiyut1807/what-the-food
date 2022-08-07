@@ -1,5 +1,7 @@
 ## wtf Model
 
+[![ Thai-Food-Classification](https://img.shields.io/badge/_Thai--Food--Classification-cf5151?style=for-the-badge)](https://github.com/paleumm/Thai-Food-Classification)
+
 ### Project Structure
 ```
 .
