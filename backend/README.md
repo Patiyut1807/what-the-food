@@ -19,7 +19,7 @@ go mod init example.com/path
 Install Fiber V2
 
 ```go
-go get -u github.com/gofiber/fiber/v2
+go get -u github.com/gin-gonic/gin
 ```
 
 Download the required dependencies
@@ -44,11 +44,11 @@ docker build -t what-the-food-backend .
 ```
 
 ```bash
-docker run -it -d  --rm -p 8000:8000 -v $PWD/src:/what-the-food what-the-food-backend
+docker run -it -d --rm -p 5000:5000 what-the-food-backend
 ```
 
-_Go to `http://server_pi:8000/test` and see the result_
+_Go to `http://server_pi:5000/test` and see the result_
 
 ```text
-Hello
+{ text: "Golang" }
 ```
