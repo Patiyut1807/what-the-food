@@ -1,3 +1,6 @@
+# WTF what-the-food
+## Kind of food
+[som-tam ,kang-nhor-mai ,kang-omm ,khao-yam ,tom-uung ,khao-soi ,pad-thai ,mango-sticky-rice ,khao-tom-mud ,kang-khee-lek ,nam-prik-oong ,kang-hung-lae ,nam-prik-nhum ,khao-mun-kai ,kang-tai-pla ,kang-hed-por
 ## Note
 - Feature(available now)
 > Pick image and send to server
