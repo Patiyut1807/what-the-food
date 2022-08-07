@@ -26,7 +26,6 @@
 
 ### Contributors
 
-[![10DEV - mobile](https://img.shields.io/badge/10DEV-mobile-b062d4?style=for-the-badge)](https://github.com/Patiyut1807) [![paleumm - model](https://img.shields.io/badge/paleumm-model-EE4C2C?style=for-the-badge)](https://github.com/paleumm) [![pune - backend](https://img.shields.io/badge/pune-backend-7ed0ec?style=for-the-badge)](https://github.com/worachanon226)
-
+[![10DEV - mobile](https://img.shields.io/badge/10DEV-mobile-7F52FF?style=for-the-badge)](https://github.com/Patiyut1807) [![paleumm - model](https://img.shields.io/badge/paleumm-model-EE4C2C?style=for-the-badge)](https://github.com/paleumm) [![PUNE - backend](https://img.shields.io/badge/PUNE-backend-00ADD8?style=for-the-badge)](https://github.com/worachanon226)
 ### License
 This project is licensed under the [MIT](https://choosealicense.com/licenses/mit/) License.
