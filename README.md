@@ -1,38 +1,18 @@
-# what-the-food
+# WTF [![WTF](https://img.shields.io/badge/what--the--food-b171cc?style=for-the-badge)](https://github.com/paleumm/what-the-food) 
 
-**what-the-food** or **WTF** is a mobile application that allows users to classify Thai food from their mobile devices.
+![Kotlin](https://img.shields.io/badge/kotlin-%230095D5.svg?style=for-the-badge&logo=kotlin&logoColor=white) ![Go](https://img.shields.io/badge/go-%2300ADD8.svg?style=for-the-badge&logo=go&logoColor=white) ![PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=PyTorch&logoColor=white) ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white) 
+
+
+**WTF** or **what-the-food** is a mobile application that allows users to classify Thai food from their mobile devices.
 
 ### Project Structure
 
 ```
 .
 ├── backend
-│   ├── Dockerfile
 │   ├── model
-│   │   ├── app.py
-│   │   ├── class_food.txt
-│   │   └── README.md
-│   ├── README.md
 │   └── src
-│       ├── go.mod
-│       ├── go.sum
-│       └── main.go
-├── LICENSE
-├── README.md
 └── wtf_app
-    ├── app
-    │   ├── build.gradle
-    │   ├── proguard-rules.pro
-    │   ├── release
-    │   └── src
-    ├── build.gradle
-    ├── gradle
-    ├── gradle.properties
-    ├── gradlew
-    ├── gradlew.bat
-    └── settings.gradle
-
-37 directories, 46 files
 ```
 
 `backend` : go backend and classification model
@@ -41,18 +21,26 @@
 
 > For more details, you can read through each README for each directory.
 
-### To run `what-the-food` application
+### Usage
+`Backend` : [deploy the backend](./backend/README.md)
 
-## WTF-What the food android application
-### Roadmap
-- Feature
-> Capture image
-> Present how to cook that food
-> Input name of the food to present data of that food
+`WTF app` : [download the release](https://github.com/paleumm/what-the-food/releases)
 
-### Contributing
+<!--
 
-We wish to expand this project up and correct all of our faults in order to make our project great.
+</div>
+
+<div align="center">
+
+[![view - Documentation](https://img.shields.io/badge/view-Documentation-blue?style=for-the-badge)](/docs/ "Go to project documentation")
+
+</div> -->
+
+### Contributors
+
+[![10DEV - mobile](https://img.shields.io/badge/10DEV-mobile-7F52FF?style=for-the-badge)](https://github.com/Patiyut1807) [![paleumm - model](https://img.shields.io/badge/paleumm-model-EE4C2C?style=for-the-badge)](https://github.com/paleumm) [![PUNE - backend](https://img.shields.io/badge/PUNE-backend-00ADD8?style=for-the-badge)](https://github.com/worachanon226)
 
 ### License
-[MIT](https://choosealicense.com/licenses/mit/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+
+Released under [MIT](/LICENSE) by [@paleumm](https://github.com/paleumm).
