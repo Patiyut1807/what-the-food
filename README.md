@@ -5,15 +5,7 @@
 
 **WTF** or **what-the-food** is a mobile application that allows users to classify Thai food from their mobile devices.
 
-### Project Structure
-
-```
-.
-├── backend
-│   ├── model
-│   └── src
-└── wtf_app
-```
+### Project Overview
 
 `backend` : go backend and classification model
 
