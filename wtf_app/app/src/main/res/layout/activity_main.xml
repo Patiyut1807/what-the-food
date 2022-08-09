@@ -20,13 +20,16 @@
         app:srcCompat="@mipmap/ic_launcher"
         tools:ignore="ImageContrastCheck" />
 
-    <!--    <Button-->
-    <!--        android:id="@+id/btnCamera"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text="@string/take_photo"-->
-    <!--        tools:layout_editor_absoluteX="141dp"-->
-    <!--        tools:layout_editor_absoluteY="603dp" />-->
+    <Button
+        android:id="@+id/btnCamera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/take_photo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnPick"
+        app:layout_constraintStart_toStartOf="@+id/btnPick"
+        app:layout_constraintTop_toBottomOf="@+id/btnPick"
+        app:layout_constraintVertical_bias="0.13" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -70,7 +73,6 @@
         android:id="@+id/btnPick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="80dp"
         android:text="@string/pick_image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

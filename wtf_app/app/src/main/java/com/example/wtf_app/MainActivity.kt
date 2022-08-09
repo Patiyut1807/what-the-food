@@ -2,23 +2,34 @@
 
 package com.example.wtf_app
 
+import android.Manifest
+import android.R.attr
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.view.View
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Response
 import com.android.volley.toolbox.Volley
 import com.example.wtf_app.databinding.ActivityMainBinding
 import org.json.JSONObject
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
 
 
 const val REQUEST_CODE = 100
+const val REQUEST_CAMERA = 200
 
 
 class MainActivity : AppCompatActivity() {
@@ -31,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-//        viewBinding.btnCamera.setOnClickListener { capturePhoto() }
+        viewBinding.btnCamera.setOnClickListener { capturePhoto() }
         viewBinding.btnPick.setOnClickListener { openImageGallery() }
     }
 
@@ -42,11 +53,24 @@ class MainActivity : AppCompatActivity() {
 //        )
 //        startActivity(intent)
 //    }
+    @Suppress("DEPRECATED_IDENTITY_EQUALS")
     private fun capturePhoto() {
 
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        ActivityResultContracts.RequestPermission()
-
+    if (ContextCompat.checkSelfPermission(this,
+            Manifest.permission.CAMERA) !==
+        PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.CAMERA)) {
+            ActivityCompat.requestPermissions(this,
+                arrayOf(Manifest.permission.CAMERA), 1)
+        } else {
+            ActivityCompat.requestPermissions(this,
+                arrayOf(Manifest.permission.CAMERA), 1)
+        }
+    } else{
+        startActivityForResult(cameraIntent, REQUEST_CODE)
+    }
     }
 
     private fun openImageGallery() {
@@ -96,16 +120,33 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
             val uri = data?.data
+
             if (uri != null) {
                 viewBinding.imgPreview.setImageURI(uri)
                 startProgressbar()
                 createImageData(uri)
                 uploadImage()
             }
+        }else if (requestCode === REQUEST_CAMERA) {
+            val bytes = ByteArrayOutputStream()
+            val thumbnail = data?.extras?.get("data") as Bitmap
+            viewBinding.imgPreview.setImageBitmap(thumbnail)
+            thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
+            val destination = File(Environment.getExternalStorageDirectory(), "temp.jpg")
+            val fo: FileOutputStream
+            try {
+                fo = FileOutputStream(destination)
+                fo.write(bytes.toByteArray())
+                fo.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+            createImageData(destination.toUri())
+            uploadImage()
         }
-        super.onActivityResult(requestCode, resultCode, data)
     }
     fun stopProgressbar(){
         viewBinding.progressBar.visibility = View.INVISIBLE
