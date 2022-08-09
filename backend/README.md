@@ -20,6 +20,13 @@ Install Fiber V2
 go get -u github.com/gofiber/fiber/v2
 ```
 
+Download the required dependencies
+
+```bash
+go mod download
+go mod vertify
+```
+
 ## Usage
 
 _Run the app using go run command_
@@ -35,5 +42,11 @@ docker build -t what-the-food-backend .
 ```
 
 ```bash
-docker run -p 8000:8000 what-the-food-backend:latest
+docker run -it -d  --rm -p 8000:8000 -v $PWD/src:/what-the-food what-the-food-backend
+```
+
+_Go to `http://server_pi:8000/test` and see the result_
+
+```text
+Hello
 ```

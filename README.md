@@ -1,33 +1,43 @@
 # what-the-food
 
-**what-the-food** or **WTF** is a mobile application that allows users to ~~classify Thai food from their mobile devices.~~
+**what-the-food** or **WTF** is a mobile application that allows users to classify Thai food from their mobile devices.
 
 ### Project Structure
 
 ```
 .
-├── LICENSE
-├── README.md
 ├── backend
 │   ├── Dockerfile
-│   ├── go.mod
-│   ├── go.sum
-│   └── main.go
-└── model
-    ├── README.md
-    ├── app.py
-    ├── class_food.txt
-    ├── output.json
-    └── test.jpeg
+│   ├── model
+│   │   ├── app.py
+│   │   ├── class_food.txt
+│   │   └── README.md
+│   ├── README.md
+│   └── src
+│       ├── go.mod
+│       ├── go.sum
+│       └── main.go
+├── LICENSE
+├── README.md
+└── wtf_app
+    ├── app
+    │   ├── build.gradle
+    │   ├── proguard-rules.pro
+    │   ├── release
+    │   └── src
+    ├── build.gradle
+    ├── gradle
+    ├── gradle.properties
+    ├── gradlew
+    ├── gradlew.bat
+    └── settings.gradle
 
-2 directories, 11 files
+37 directories, 46 files
 ```
 
-`model` : PyTorch inference script
+`backend` : go backend and classification model
 
-`backend` : go backend
-
-`android-app` : android application
+`wtf_app` : android application
 
 > For more details, you can read through each README for each directory.
 
