@@ -60,16 +60,12 @@ class MainActivity : AppCompatActivity() {
     if (ContextCompat.checkSelfPermission(this,
             Manifest.permission.CAMERA) !==
         PackageManager.PERMISSION_GRANTED) {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                Manifest.permission.CAMERA)) {
+
             ActivityCompat.requestPermissions(this,
-                arrayOf(Manifest.permission.CAMERA), 1)
-        } else {
-            ActivityCompat.requestPermissions(this,
-                arrayOf(Manifest.permission.CAMERA), 1)
-        }
+                arrayOf(Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE), 1)
+
     } else{
-        startActivityForResult(cameraIntent, REQUEST_CODE)
+        startActivityForResult(cameraIntent, REQUEST_CAMERA)
     }
     }
 
@@ -82,6 +78,7 @@ class MainActivity : AppCompatActivity() {
     }
     private fun uploadImage() {
         imageData?: return
+        startProgressbar()
         val request = object : VolleyFileUploadRequest(
             Method.POST,
             postURL,
@@ -126,7 +123,6 @@ class MainActivity : AppCompatActivity() {
 
             if (uri != null) {
                 viewBinding.imgPreview.setImageURI(uri)
-                startProgressbar()
                 createImageData(uri)
                 uploadImage()
             }
@@ -135,16 +131,16 @@ class MainActivity : AppCompatActivity() {
             val thumbnail = data?.extras?.get("data") as Bitmap
             viewBinding.imgPreview.setImageBitmap(thumbnail)
             thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
-            val destination = File(Environment.getExternalStorageDirectory(), "temp.jpg")
-            val fo: FileOutputStream
-            try {
-                fo = FileOutputStream(destination)
-                fo.write(bytes.toByteArray())
-                fo.close()
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-            createImageData(destination.toUri())
+//            val destination = File(Environment.getExternalStorageDirectory(), "temp.jpg")
+//            val fo: FileOutputStream
+//            try {
+//                fo = FileOutputStream(destination)
+//                fo.write(bytes.toByteArray())
+//                fo.close()
+//            } catch (e: IOException) {
+//                e.printStackTrace()
+//            }
+                imageData = bytes.toByteArray()
             uploadImage()
         }
     }
