@@ -121,7 +121,7 @@ func uploadurl(c *gin.Context) {
 
 func getfooddata(c *gin.Context) {
 	name := c.Param("food")
-	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI("mongodb+srv://worachanon226:Puneny0226@cluster0.h1omugq.mongodb.net/?retryWrites=true&w=majority"))
+	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI("mongodb+srv://username:password@cluster0.h1omugq.mongodb.net/?retryWrites=true&w=majority"))
 	if err != nil {
 		panic(err)
 	}
