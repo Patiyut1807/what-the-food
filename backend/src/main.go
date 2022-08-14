@@ -1,7 +1,9 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -9,6 +11,9 @@ import (
 	"os/exec"
 
 	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type Data struct {
@@ -114,12 +119,42 @@ func uploadurl(c *gin.Context) {
 	Complier(c)
 }
 
+func getfooddata(c *gin.Context) {
+	name := c.Param("food")
+	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI("mongodb+srv://worachanon226:Puneny0226@cluster0.h1omugq.mongodb.net/?retryWrites=true&w=majority"))
+	if err != nil {
+		panic(err)
+	}
+	defer func() {
+		if err := client.Disconnect(context.TODO()); err != nil {
+			panic(err)
+		}
+	}()
+	coll := client.Database("what-the-food").Collection("menu")
+	var result bson.M
+	err = coll.FindOne(context.TODO(), bson.D{{Key: "name", Value: name}}).Decode(&result)
+	if err == mongo.ErrNoDocuments {
+		fmt.Printf("No document was found with the name %s\n", name)
+		return
+	}
+	if err != nil {
+		panic(err)
+	}
+	jsonData, err := json.MarshalIndent(result, "", "    ")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("%s\n", jsonData)
+	c.String(http.StatusOK, "%s\n", jsonData)
+}
+
 func main() {
 	app := gin.Default()
 
 	app.GET("/test", servercheck)
 	app.POST("post-image", uploadimage)
 	app.POST("/post-url", uploadurl)
+	app.GET("/data/:food", getfooddata)
 
 	app.Run(":5000")
 }
