@@ -25,25 +25,26 @@ type Outputjson struct {
 	Probability float64 `json:"probability"`
 }
 
+func ErrFunc(err error, c *gin.Context) {
+	data := Data{
+		Text: err.Error(),
+	}
+	c.JSON(0, data)
+}
+
 func Complier(c *gin.Context) {
 
 	cmd := exec.Command("python3", "app.py", "--model", "0", "--img", "input.jpg")
 	err := cmd.Run()
 
 	if err != nil {
-		data := Data{
-			Text: err.Error(),
-		}
-		c.JSON(0, data)
+		ErrFunc(err, c)
 		return
 	}
 
 	file, readJsonErr := ioutil.ReadFile("output.json")
 	if readJsonErr != nil {
-		data := Data{
-			Text: readJsonErr.Error(),
-		}
-		c.JSON(0, data)
+		ErrFunc(readJsonErr, c)
 		return
 	}
 
@@ -52,10 +53,7 @@ func Complier(c *gin.Context) {
 	jsonErr := json.Unmarshal(file, &output)
 
 	if jsonErr != nil {
-		data := Data{
-			Text: jsonErr.Error(),
-		}
-		c.JSON(0, data)
+		ErrFunc(jsonErr, c)
 		return
 	}
 
@@ -78,10 +76,7 @@ func uploadimage(c *gin.Context) {
 		c.SaveUploadedFile(file, "input.jpg")
 		Complier(c)
 	} else {
-		data := Data{
-			Text: err.Error(),
-		}
-		c.JSON(0, data)
+		ErrFunc(err, c)
 		return
 	}
 }
@@ -90,30 +85,21 @@ func uploadurl(c *gin.Context) {
 	imgurl := c.PostForm("url")
 	res, err := http.Get(imgurl)
 	if err != nil {
-		data := Data{
-			Text: err.Error(),
-		}
-		c.JSON(0, data)
+		ErrFunc(err, c)
 		return
 	}
 	defer res.Body.Close()
 
 	file, err := os.Create("input.jpg")
 	if err != nil {
-		data := Data{
-			Text: err.Error(),
-		}
-		c.JSON(0, data)
+		ErrFunc(err, c)
 		return
 	}
 	defer file.Close()
 
 	_, err = io.Copy(file, res.Body)
 	if err != nil {
-		data := Data{
-			Text: err.Error(),
-		}
-		c.JSON(0, data)
+		ErrFunc(err, c)
 		return
 	}
 	Complier(c)
@@ -123,11 +109,11 @@ func getfooddata(c *gin.Context) {
 	name := c.Param("food")
 	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI("mongodb+srv://username:password@cluster0.h1omugq.mongodb.net/?retryWrites=true&w=majority"))
 	if err != nil {
-		panic(err)
+		ErrFunc(err, c)
 	}
 	defer func() {
 		if err := client.Disconnect(context.TODO()); err != nil {
-			panic(err)
+			ErrFunc(err, c)
 		}
 	}()
 	coll := client.Database("what-the-food").Collection("menu")
@@ -138,13 +124,12 @@ func getfooddata(c *gin.Context) {
 		return
 	}
 	if err != nil {
-		panic(err)
+		ErrFunc(err, c)
 	}
 	jsonData, err := json.MarshalIndent(result, "", "    ")
 	if err != nil {
-		panic(err)
+		ErrFunc(err, c)
 	}
-	fmt.Printf("%s\n", jsonData)
 	c.String(http.StatusOK, "%s\n", jsonData)
 }
 
