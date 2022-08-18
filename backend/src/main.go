@@ -105,6 +105,21 @@ func uploadurl(c *gin.Context) {
 	Complier(c)
 }
 
+func getjwt(c *gin.Context) {
+
+	res := c.Request.Header.Get("Access")
+
+	if res != api_key {
+		return
+	} else {
+		token, err := CreateJWT()
+		if err != nil {
+			return
+		}
+		print(token)
+	}
+}
+
 func getfooddata(c *gin.Context) {
 	name := c.Param("food")
 	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI("mongodb+srv://username:password@cluster0.h1omugq.mongodb.net/?retryWrites=true&w=majority"))
@@ -140,6 +155,7 @@ func main() {
 	app.POST("post-image", uploadimage)
 	app.POST("/post-url", uploadurl)
 	app.GET("/data/:food", getfooddata)
+	app.GET("/access-key", getjwt)
 
 	app.Run(":5000")
 }
