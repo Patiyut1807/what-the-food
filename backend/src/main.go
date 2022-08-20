@@ -25,6 +25,8 @@ type Outputjson struct {
 	Probability float64 `json:"probability"`
 }
 
+var access_tok = ""
+
 func ErrFunc(err error, c *gin.Context) {
 	data := Data{
 		Text: err.Error(),
@@ -62,7 +64,6 @@ func Complier(c *gin.Context) {
 }
 
 func servercheck(c *gin.Context) {
-
 	data := Data{
 		Text: "Golang",
 	}
@@ -116,7 +117,7 @@ func getjwt(c *gin.Context) {
 		if err != nil {
 			return
 		}
-		print(token)
+		access_tok = token
 	}
 }
 
@@ -148,14 +149,42 @@ func getfooddata(c *gin.Context) {
 	c.String(http.StatusOK, "%s\n", jsonData)
 }
 
+func getjwtwithkey(c *gin.Context) {
+
+	res := c.Param("key")
+
+	if res != api_key {
+		return
+	} else {
+		token, err := CreateJWT()
+		if err != nil {
+			return
+		}
+		access_tok = token
+	}
+}
+
+func Validate(next func(c *gin.Context)) gin.HandlerFunc {
+	return gin.HandlerFunc(func(c *gin.Context) {
+		if ValidateJWT(access_tok) {
+			access_tok = ""
+			next(c)
+
+		} else {
+			c.JSON(http.StatusUnauthorized, "can't access")
+		}
+	})
+}
+
 func main() {
 	app := gin.Default()
 
-	app.GET("/test", servercheck)
-	app.POST("post-image", uploadimage)
-	app.POST("/post-url", uploadurl)
-	app.GET("/data/:food", getfooddata)
+	app.GET("/test", Validate(servercheck))
+	app.POST("post-image", Validate(uploadimage))
+	app.POST("/post-url", Validate(uploadurl))
+	app.GET("/data/:food", Validate(getfooddata))
 	app.GET("/access-key", getjwt)
+	app.GET("/access-key/:key", getjwtwithkey)
 
 	app.Run(":5000")
 }
