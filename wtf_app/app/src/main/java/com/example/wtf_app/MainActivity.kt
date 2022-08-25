@@ -12,6 +12,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -21,6 +22,7 @@ import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Response
 import com.android.volley.toolbox.Volley
 import com.example.wtf_app.databinding.ActivityMainBinding
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -46,13 +48,6 @@ class MainActivity : AppCompatActivity() {
         viewBinding.btnPick.setOnClickListener { openImageGallery() }
     }
 
-//        private fun openCamera() {
-//        val intent = Intent(
-//            this,
-//            CameraActivity::class.java
-//        )
-//        startActivity(intent)
-//    }
     @Suppress("DEPRECATED_IDENTITY_EQUALS")
     private fun capturePhoto() {
 
@@ -73,8 +68,6 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, REQUEST_CODE)
-
-//
     }
     private fun uploadImage() {
         imageData?: return
@@ -83,11 +76,17 @@ class MainActivity : AppCompatActivity() {
             Method.POST,
             postURL,
             Response.Listener {res->
-                val jsonObject = JSONObject(String(res.data,charset("UTF-8")))
+                val jsonArray = JSONArray(String(res.data,charset("UTF-8")))
+                val datalist = mutableListOf<JSONObject>()
+
+
+                for(i in 0..jsonArray.length()-1){
+                    datalist.add(jsonArray.getJSONObject(i))
+                }
                 stopProgressbar()
-                viewBinding.textResult.text = "Result: ${jsonObject.getString("class") }"
-                viewBinding.textProb.text = "Probability: %.2f".format(jsonObject.getDouble("probability"))
-            },
+                viewBinding.textResult.text = "Result: ${datalist[0].getString("class") }"
+                viewBinding.textProb.text = "Probability: %.2f".format(datalist[0].getDouble("probability"))
+                },
             Response.ErrorListener {
                 viewBinding.textResult.text = "Error"
             }
